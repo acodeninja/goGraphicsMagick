@@ -14,6 +14,10 @@ To compile any program that uses this library you will need a local copy of the 
 
 ``` ./configure ```
 
+######Or on OS X
+
+``` ./configure CC=clang ```
+
 ##Development
 
 ###Authors
