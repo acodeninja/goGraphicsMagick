@@ -24,10 +24,10 @@ int ImageRotate(int argc, char **argv)
   MagickWand *magick_wand;
   MagickPassFail status = MagickPass;
   const char *infile, *outfile;
+  const double *degrees;
   infile=argv[1];
   outfile=argv[2];
-  printf("%s\n", infile);
-  printf("%s\n", outfile);
+  degrees=argv[3];
   // Initialize GraphicsMagick API
   printf("InitializeMagick...\n");
   InitializeMagick(*argv);
@@ -52,7 +52,7 @@ int ImageRotate(int argc, char **argv)
       printf("PixelSetColor\n");
       PixelSetColor(background,"#000000");
       printf("MagickRotateImage\n");
-      status = MagickRotateImage(magick_wand,background,30);
+      status = MagickRotateImage(magick_wand,background,degrees);
       printf("DestroyPixelWand\n");
       DestroyPixelWand(background);
     }
