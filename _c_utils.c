@@ -83,3 +83,54 @@ int ImageRotate(int argc, char **argv)
   DestroyMagick();
   return (status == MagickPass ? 0 : 1);
 }
+
+// The GraphicsMagick based image conversion function
+int ImageConvert(int argc, char **argv)
+{
+  MagickWand *magick_wand;
+  MagickPassFail status = MagickPass;
+  const char *infile, *outfile;
+  infile=argv[1];
+  outfile=argv[2];
+  printf("%s\n", infile);
+  printf("%s\n", outfile);
+  // Initialize GraphicsMagick API
+  printf("InitializeMagick...\n");
+  InitializeMagick(*argv);
+  // Allocate Wand handle
+  printf("NewMagickWand\n");
+  magick_wand=NewMagickWand();
+  // Read input image file
+  if (status == MagickPass)
+    {
+      printf("MagickPass\n");
+      printf("MagickReadImage\n");
+      status = MagickReadImage(magick_wand,infile);
+    }
+  // Write output file
+  if (status == MagickPass)
+    {
+      printf("MagickPass\n");
+      printf("MagickWriteImage\n");
+      printf("%s\n", outfile);
+      status = MagickWriteImage(magick_wand,outfile);
+    }
+  // Diagnose any error
+  if (status != MagickPass)
+    {
+      printf("!MagickPass\n");
+      char *description;
+      ExceptionType severity;
+      printf("MagickGetException\n");
+      description=MagickGetException(magick_wand,&severity);
+      (void) fprintf(stderr,"%.1024s (severity %d)\n",
+                     description,severity);
+    }
+  // Release Wand handle
+  printf("DestroyMagickWand\n");
+  DestroyMagickWand(magick_wand);
+  // Destroy GraphicsMagick API
+  printf("DestroyMagick\n");
+  DestroyMagick();
+  return (status == MagickPass ? 0 : 1);
+}
