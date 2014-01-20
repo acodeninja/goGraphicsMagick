@@ -43,7 +43,7 @@ func goSliceStringToCharStar(goSliceString []string) (cCharStar **C.char) {
 
 // The rotate function
 // Rotates an image and puts on an optional background
-func Rotate(srcPath string, destPath string, degrees int) error {
+func Rotate(srcPath, destPath string) error {
 	var err error = nil
 
   // Check the source paths exist
@@ -67,8 +67,31 @@ func Rotate(srcPath string, destPath string, degrees int) error {
 	return err
 }
 
-func Convert(srcPath, destPath) error {
+// The conversion function
+// Converts an image from one format to another
+func Convert(srcPath, destPath string) error {
   var err error = nil
 
+  if srcPath == "" {
+    err = errors.New("Failure, there is no source image. Please specify one using -src <src.jpg>.")
+  }
 
+  if destPath == "" {
+    err = errors.New("Failure, there is no destination image. Please specify one using -dest <dest.png>.")
+  }
+
+  // Append the source and destination to argv
+  goArgv = append(goArgv, "")
+  goArgv = append(goArgv, srcPath)
+  goArgv = append(goArgv, destPath)
+
+  fmt.Println(goArgv)
+
+  cArgv = goSliceStringToCharStar(goArgv)
+  // defer C.freeCharArray(cArgv, C.int(len(goArgv)))
+  cArgc = C.int(len(goArgv))
+
+  C.ImageConvert(cArgc, cArgv)
+
+  return err
 }
