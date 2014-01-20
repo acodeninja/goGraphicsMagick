@@ -19,6 +19,20 @@ var goArgc int
 var cArgv **C.char
 var cArgc C.int
 
+
+func checkPaths(srcPath, destPath string) error {
+  var err error = nil
+  if srcPath == "" {
+    err = errors.New("Failure, there is no source image. Please specify one using -src <src.jpg>.")
+  }
+
+  if destPath == "" {
+    err = errors.New("Failure, there is no destination image. Please specify one using -dest <dest.png>.")
+  }
+  return err
+}
+
+// C helper function to convert a slice of strings to a **char for argv
 func goSliceStringToCharStar(goSliceString []string) (cCharStar **C.char) {
 	cCharStar = C.makeCharArray(C.int(len(goSliceString)))
 
@@ -31,23 +45,20 @@ func goSliceStringToCharStar(goSliceString []string) (cCharStar **C.char) {
 
 // The rotate function
 // Rotates an image and puts on an optional background
-func Rotate(srcPath, destPath string) error {
+func Rotate(srcPath, destPath, degrees string) error {
 	var err error = nil
 
-	if srcPath == "" {
-		err = errors.New("Failure, there is no source image. Please specify one using -src <src.jpg>.")
-	}
-
-	if destPath == "" {
-		err = errors.New("Failure, there is no destination image. Please specify one using -dest <dest.png>.")
-	}
+  // Check the source paths exist
+  err = checkPaths(srcPath, destPath)
+  if err != nil {
+    panic("The src or destination paths have not been set.")
+  }
 
 	// Append the source and destination to argv
 	goArgv = append(goArgv, "")
 	goArgv = append(goArgv, srcPath)
   goArgv = append(goArgv, destPath)
-
-  fmt.Println(goArgv)
+  goArgv = append(goArgv, degrees)
 
 	cArgv = goSliceStringToCharStar(goArgv)
 	// defer C.freeCharArray(cArgv, C.int(len(goArgv)))
