@@ -9,7 +9,7 @@ import (
 
 var _srcImagePath string
 var _destImagePath string
-var _degrees C.double
+var _degrees string
 
 func init() {
 	flag.StringVar(&_srcImagePath, "src", "", "The source image you wish to convert from.")
