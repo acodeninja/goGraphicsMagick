@@ -12,11 +12,11 @@ To compile any program that uses this library you will need a local copy of the 
 
 ``` cd GM_SRC ```
 
-``` ./configure ```
+``` ./configure ``` ( or on OS X ``` ./configure CC=clang --enable-shared```)
 
-######Or on OS X
+``` make ```
 
-``` ./configure CC=clang ```
+You also need go1.2 (available from homebrew on OS X and most repos on Linux)
 
 ##Development
 
