@@ -31,9 +31,9 @@ You also need go1.2 (available from homebrew on OS X and most repos on Linux)
 
 ### Authors
 
-* Lawrence Goldstien: github.com/lgoldstien | onmylemon.co.uk
+* Lawrence Goldstien: github.com/acodeninja | acode.ninja
 
 ### Contribution
 
 ##License
-MIT License, please see LICENSE file, if none is present please read it [here](https://github.com/lgoldstien/goGraphicsMagick/blob/stable/LICENSE)
+MIT License, please see LICENSE file, if none is present please read it [here](https://github.com/acodeninja/goGraphicsMagick/blob/stable/LICENSE)
